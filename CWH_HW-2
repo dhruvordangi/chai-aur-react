@@ -9,7 +9,8 @@
             color: white;
             background-color: blue;
         }
-        p:first-child{
+        /* p:first-child{ */
+        div p:nth-child(1){ /*you can do like this too*/
             color: red;
             background-color: yellow;
         }
