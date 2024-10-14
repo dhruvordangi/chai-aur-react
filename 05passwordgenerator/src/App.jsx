@@ -1,10 +1,14 @@
-import { useState, useCallback,useEffect } from 'react'
+import { useState, useCallback,useEffect ,useRef} from 'react'
 
 function App() {
   const [length, setLength] = useState(8)
   const [numberAllowed, setNumberAllowed] = useState(false)
   const [charAllowed, setCharAllowed] = useState(false)
   const [password, setPassword] = useState("")
+
+  //using ref hook
+
+  const passwordRef=useRef(null)
 
   const passwordGenerator = useCallback(() => {
     let pass = ""
@@ -26,6 +30,11 @@ function App() {
     passwordGenerator()
   }, [length,passwordGenerator,numberAllowed,charAllowed] )
 
+  const copyPassWordToClipboard=useCallback(() =>{
+    passwordRef.current?.select()
+    window.navigator.clipboard.writeText(password)
+  }, [password])
+
   return (
       <div className="w-screen shadow-md rounded-lg px-24 py-3 my-8 mx-8 text-orange-500 bg-gray-800">
         <h1 className="text-white text-center my-3">Password Generator</h1>
@@ -36,8 +45,11 @@ function App() {
             className="outline-none w-full py-1 px-3"
             placeholder="password"
             readOnly
+            ref={passwordRef}
           />
-          <button className="outline-none bg-blue-600 text-white px-3">Copy</button>
+          <button 
+          onClick={copyPassWordToClipboard}
+          className="outline-none bg-blue-600 text-white px-3">Copy</button>
         </div>
         <div className='flex text-sm gap-x-2'>
         <div className="flex items-center gap-x-1 mb-4">
@@ -57,7 +69,7 @@ function App() {
             type="checkbox"
             checked={numberAllowed}
             id="numberInput"
-            onChange={() => setNumberAllowed((prev) => !prev)}
+            onChange={(prev) => setNumberAllowed((prev) => !prev)}
           />
           <label htmlFor="numberInput"> Numbers</label>
         </div>
@@ -66,7 +78,7 @@ function App() {
           <input type="checkbox"
             defaultChecked={charAllowed}
             id='characterInput'
-            onChange={()=>{
+            onChange={(prev)=>{
               setCharAllowed((prev)=> (!prev) )
             }}
           />
