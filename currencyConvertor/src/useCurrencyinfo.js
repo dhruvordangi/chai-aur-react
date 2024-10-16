@@ -1,5 +1,8 @@
 import {useEffect,useState} from 'react'
 
+
+//this is a custom hook
+//useEffect is a React Hook that lets you synchronize a component with an external system.
 function useCurrencyInfo(currency){
     const [data, setData] = useState({})
     useEffect( () =>{
